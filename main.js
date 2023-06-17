@@ -20,8 +20,8 @@ map.addControl(new L.Control.Fullscreen({
 
 //thematische Layer 
 let themaLayer = {
-    almen: L.featureGroup().addTo(map),
-    disableClusteringAtZoom: 17
+    almen: L.markerClusterGroup({disableClusteringAtZoom: 17
+            }),
 }
 
 //LeaftletHash
@@ -43,7 +43,7 @@ let layerControl = L.control.layers({
     "BasemapAT Orthofoto": L.tileLayer.provider("BasemapAT.orthofoto"),
     "BasemapAT Beschriftung": L.tileLayer.provider("BasemapAT.overlay")
 }, {
-    "Almen im Innsbrucker Land S": themaLayer.almen.addTo(map),
+    "Almen im Innsbrucker Land": themaLayer.almen.addTo(map),
 }).addTo(map);
 
 // Maßstab
@@ -57,7 +57,7 @@ async function showAlmen(url) {
     let jsondata = await response.json(); //json Daten aus Response entnehmen 
     L.geoJSON(jsondata, {
         pointToLayer: function(feature, latlng) {
-            //console.log(feature.properties)
+            console.log(feature.properties)
             return L.marker(latlng, {
                 icon: L.icon({
                     iconUrl: "icons/alm.png",
@@ -69,7 +69,9 @@ async function showAlmen(url) {
         onEachFeature: function (feature, layer) {
             let prop = feature.properties;
             layer.bindPopup(`      
-            <h4> ${prop.NAME}</h4>        
+            <h4> ${prop.NAME}</h4>
+            Art der Alm: ${prop.OBJEKTBEZEICHNUNG}
+
             `);
         }
     }).addTo(themaLayer.almen); //alle Busstopps anzeigen als Marker
