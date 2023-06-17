@@ -9,7 +9,7 @@ let innsbruck = {
 // Karte initialisieren
 let map = L.map("map").setView([
     innsbruck.lat, innsbruck.lng
-], 15);
+], 12);
 
 map.addControl(new L.Control.Fullscreen({
     title: {
@@ -43,7 +43,7 @@ let layerControl = L.control.layers({
     "BasemapAT Orthofoto": L.tileLayer.provider("BasemapAT.orthofoto"),
     "BasemapAT Beschriftung": L.tileLayer.provider("BasemapAT.overlay")
 }, {
-    "Almen im Innsbrucker Land S": themaLayer.almenaddTo(map),
+    "Almen im Innsbrucker Land S": themaLayer.almen.addTo(map),
 }).addTo(map);
 
 // Maßstab
@@ -60,7 +60,7 @@ async function showAlmen(url) {
             //console.log(feature.properties)
             return L.marker(latlng, {
                 icon: L.icon({
-                    iconUrl: "almen/icons/alm.png",
+                    iconUrl: "icons/alm.png",
                     iconAnchor: [16, 37],
                     popupAnchor: [0, -37],
                 })
