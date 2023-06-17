@@ -13,6 +13,10 @@ a {
     color: black;
 }
 
+header > img {
+    object-position: mid ;
+}
+
 main {
     max-width: 1200px;
     margin: auto;
