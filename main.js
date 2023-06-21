@@ -70,5 +70,5 @@ async function showAlmen(url) {
 }
 showAlmen ("https://data-tiris.opendata.arcgis.com/datasets/tiris::almzentren-1.geojson"); //aufrufen der Funktion 
 //showAlmen ("bilder/AlmenIBKJS.json");
-
+//showAlmen ("bilder/AlmenIBKJS.json");
 
