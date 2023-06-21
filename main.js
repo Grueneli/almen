@@ -61,8 +61,12 @@ async function showHuetten (url) {
         onEachFeature: function (feature, layer) {
             let prop = feature.properties;
             layer.bindPopup(`      
-            <h4> ${prop.NAME}</h4>
-            Art der Alm: ${prop.OBJEKTBEZEICHNUNG}
+            <h4> ${prop.NAME} auf ${prop.SEEHOEHE} m Höhe</h4>
+            <hr>
+            <b>Betreiber:</b> ${prop.BETREIBER} <br>
+            <b>geöffnete Monate: </b> ${prop.OFFEN} <br>
+            <b>Übernachtungsmöglichkeiten: </b>${prop.UEBERNACHTUNG} <br>
+            <a href="${prop.HOMEPAGE}" target="IBK">${prop.HOMEPAGE}</a>
 
             `);
         }
