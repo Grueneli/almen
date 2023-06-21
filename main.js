@@ -20,20 +20,19 @@ map.addControl(new L.Control.Fullscreen({
 
 //thematische Layer 
 let themaLayer = {
-    almen: L.featureGroup({disableClusteringAtZoom: 16
+    almen: L.markerClusterGroup({disableClusteringAtZoom: 17
             }),
 }
 
 
 // Hintergrundlayer
 let layerControl = L.control.layers({
-    "BasemapAT Grau": L.tileLayer.provider("BasemapAT.grau").addTo(map),
-    "BasemapAT Standard": L.tileLayer.provider("BasemapAT.basemap"),
-    "BasemapAT High-DPI": L.tileLayer.provider("BasemapAT.highdpi"),
-    "BasemapAT Gelände": L.tileLayer.provider("BasemapAT.terrain"),
-    "BasemapAT Oberfläche": L.tileLayer.provider("BasemapAT.surface"),
-    "BasemapAT Orthofoto": L.tileLayer.provider("BasemapAT.orthofoto"),
-    "BasemapAT Beschriftung": L.tileLayer.provider("BasemapAT.overlay")
+    "BasemapAT Grau": L.tileLayer.provider("BasemapAT.grau", {minZoom: 11}),
+    "BasemapAT Standard": L.tileLayer.provider("BasemapAT.basemap", {minZoom: 11}).addTo(map),
+    "BasemapAT High-DPI": L.tileLayer.provider("BasemapAT.highdpi", {minZoom: 11}),
+    "BasemapAT Gelände": L.tileLayer.provider("BasemapAT.terrain", {minZoom: 11}),
+    "BasemapAT Orthofoto": L.tileLayer.provider("BasemapAT.orthofoto", {minZoom: 11}),
+    "BasemapAT Beschriftung": L.tileLayer.provider("BasemapAT.overlay", {minZoom: 11})
 }, {
     "Hütten": themaLayer.almen.addTo(map),
 }).addTo(map);
