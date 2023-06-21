@@ -1,4 +1,4 @@
-/* Almen rund um Innsbruck */
+/* Hütten rund um Innsbruck */
 
 // Koordinaten Innsbruck
 let innsbruck = {
@@ -20,7 +20,7 @@ map.addControl(new L.Control.Fullscreen({
 
 //thematische Layer 
 let themaLayer = {
-    almen: L.markerClusterGroup({disableClusteringAtZoom: 17
+    almen: L.featureGroup({disableClusteringAtZoom: 16
             }),
 }
 
@@ -35,7 +35,7 @@ let layerControl = L.control.layers({
     "BasemapAT Orthofoto": L.tileLayer.provider("BasemapAT.orthofoto"),
     "BasemapAT Beschriftung": L.tileLayer.provider("BasemapAT.overlay")
 }, {
-    "Almen": themaLayer.almen.addTo(map),
+    "Hütten": themaLayer.almen.addTo(map),
 }).addTo(map);
 
 // Maßstab
@@ -43,13 +43,13 @@ L.control.scale({
     imperial: false,
 }).addTo(map);
 
-//Almen
-async function showAlmen(url) {
+//Hütten
+async function showHuetten (url) {
     let response = await fetch(url); //Anfrage, Antwort kommt zurück
     let jsondata = await response.json(); //json Daten aus Response entnehmen 
     L.geoJSON(jsondata, {
         pointToLayer: function(feature, latlng) {
-            //console.log(feature.properties)
+            console.log(feature.properties)
             return L.marker(latlng, {
                 icon: L.icon({
                     iconUrl: "icons/alm.png",
@@ -68,7 +68,7 @@ async function showAlmen(url) {
         }
     }).addTo(themaLayer.almen); //alle Almen anzeigen als Marker
 }
-showAlmen ("https://data-tiris.opendata.arcgis.com/datasets/tiris::almzentren-1.geojson"); //aufrufen der Funktion 
-//showAlmen ("bilder/AlmenIBKJS.json");
-//showAlmen ("bilder/AlmenIBKJS.json");
+//showAlmen ("https://data-tiris.opendata.arcgis.com/datasets/tiris::almzentren-1.geojson"); //aufrufen der Funktion 
+showHuetten ("huetten_json.geojson");
+
 
