@@ -9,7 +9,7 @@ let innsbruck = {
 // Karte initialisieren
 let map = L.map("map").setView([
     innsbruck.lat, innsbruck.lng
-], 12);
+], 11);
 
 map.addControl(new L.Control.Fullscreen({
     title: {
@@ -18,9 +18,12 @@ map.addControl(new L.Control.Fullscreen({
     }
 }));
 
+// PlugIn Hash
+let hash = new L.Hash(map);
+
 //thematische Layer 
 let themaLayer = {
-    almen: L.markerClusterGroup({disableClusteringAtZoom: 17
+    huetten: L.markerClusterGroup({disableClusteringAtZoom: 17
             }),
 }
 
@@ -29,12 +32,12 @@ let themaLayer = {
 let layerControl = L.control.layers({
     "BasemapAT Grau": L.tileLayer.provider("BasemapAT.grau", {minZoom: 11}),
     "BasemapAT Standard": L.tileLayer.provider("BasemapAT.basemap", {minZoom: 11}).addTo(map),
-    "BasemapAT High-DPI": L.tileLayer.provider("BasemapAT.highdpi", {minZoom: 11}),
-    "BasemapAT Gelände": L.tileLayer.provider("BasemapAT.terrain", {minZoom: 11}),
+   // "BasemapAT High-DPI": L.tileLayer.provider("BasemapAT.highdpi", {minZoom: 11}),
+  //  "BasemapAT Gelände": L.tileLayer.provider("BasemapAT.terrain", {minZoom: 11}),
     "BasemapAT Orthofoto": L.tileLayer.provider("BasemapAT.orthofoto", {minZoom: 11}),
-    "BasemapAT Beschriftung": L.tileLayer.provider("BasemapAT.overlay", {minZoom: 11})
+   // "BasemapAT Beschriftung": L.tileLayer.provider("BasemapAT.overlay", {minZoom: 11})
 }, {
-    "Hütten": themaLayer.almen.addTo(map),
+    "Hütten": themaLayer.huetten.addTo(map),
 }).addTo(map);
 
 // Maßstab
@@ -48,7 +51,7 @@ async function showHuetten (url) {
     let jsondata = await response.json(); //json Daten aus Response entnehmen 
     L.geoJSON(jsondata, {
         pointToLayer: function(feature, latlng) {
-            console.log(feature.properties)
+            //console.log(feature.properties)
             return L.marker(latlng, {
                 icon: L.icon({
                     iconUrl: "icons/alm.png",
@@ -61,17 +64,17 @@ async function showHuetten (url) {
             let prop = feature.properties;
             layer.bindPopup(`      
             <h4> ${prop.NAME} auf ${prop.SEEHOEHE} m Höhe</h4>
-            <hr>
+            <br>
+            <img src="${prop.NAME}.jpg" style = "width:150px", class= "center"></img>
+            <br>
             <b>Betreiber:</b> ${prop.BETREIBER} <br>
             <b>geöffnete Monate: </b> ${prop.OFFEN} <br>
             <b>Übernachtungsmöglichkeiten: </b>${prop.UEBERNACHTUNG} <br>
-            <a href="${prop.HOMEPAGE}" target="IBK">${prop.HOMEPAGE}</a>
-
+            <a href="${prop.HOMEPAGE}">${prop.HOMEPAGE}</a> <br>        
             `);
         }
-    }).addTo(themaLayer.almen); //alle Almen anzeigen als Marker
+    }).addTo(themaLayer.huetten); //alle Almen anzeigen als Marker
 }
-//showAlmen ("https://data-tiris.opendata.arcgis.com/datasets/tiris::almzentren-1.geojson"); //aufrufen der Funktion 
 showHuetten ("huetten_json.geojson");
 
 
